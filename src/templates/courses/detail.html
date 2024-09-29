@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h1>{{ object.title }}</h1>
+
+
+<ul class="list-disc">
+    
+    {% for obj in lesson_queryet %}
+    <li>
+        <a class="text-blue-500 hover:text-blue-800 hover:underline" href="{{ obj.get_absolute_path }}"> {{ obj.title }}</a>
+        {% if obj.is_comming_soon %}
+            aa raha hai thoda intezaar karo
+
+        {% endif %}
+    </li>
+    
+    {% endfor %}
+</ul>
+
+{% endblock content %}

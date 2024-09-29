@@ -1,0 +1,55 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cloudinary-video-player/2.1.0/cld-video-player.min.css" 
+crossorigin="anonymous" referrerpolicy="no-referrer" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/cloudinary-video-player/2.1.0/cld-video-player.min.js" 
+crossorigin="anonymous" referrerpolicy="no-referrer">
+</script>
+{% comment %} <script>
+    
+    const videoPlayerElements = document.getElementsByClassName('video-player')
+    console.log(videoPlayerElements)
+    
+
+    const videoPlayerId = 'demo-player'
+    
+    
+    const videoPlayerElement = document.getElementById(videoPlayerId)
+    if (videoPlayerId){
+        const cloudName = videoPlayerElement.dataset.cloudName
+        const videoUrl = videoPlayerElement.dataset.videoUrl
+        console.log(videoUrl)
+        const cld = cloudinary.videoPlayer(videoPlayerId,{
+            cloudName : cloudName
+        })
+        cld.source(videoUrl)
+    }
+
+
+</script> {% endcomment %}
+<script defer>
+
+    function renderVideoElement(videoPlayerElement) {
+        const currentVideoId = videoPlayerElement.getAttribute('id')
+        const videoPlayerId = `${currentVideoId}` + '-cfe-' + Math.random().toString(36).substr(2, 9);
+        videoPlayerElement.setAttribute("id", videoPlayerId);
+        const cloudName = videoPlayerElement.dataset.cloudName;
+        const videoUrl = videoPlayerElement.dataset.videoUrl;
+        if (cloudName && videoUrl) {
+            const cld = cloudinary.videoPlayer(videoPlayerId, {
+                cloudName: cloudName
+            });
+            cld.source(videoUrl);
+        }
+    }
+
+    function renderAllVideos() {
+        const videoPlayerClassName = 'video-player';
+        const videoPlayerElements = document.getElementsByClassName(videoPlayerClassName);
+        console.log(videoPlayerElements);
+        for (let el of videoPlayerElements) {
+            console.log(el);
+            renderVideoElement(el);
+        }
+    }
+
+    document.addEventListener('DOMContentLoaded', renderAllVideos)
+</script>

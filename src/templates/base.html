@@ -1,0 +1,20 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://cdn.tailwindcss.com"></script>
+  {% include "base/js.html" %}
+  {% comment %} {% block head_title %} 
+   head title on base.html
+  {% endblock head_title %} {% endcomment %}
+</head>
+<body>
+    {% block content %}
+    
+  <h1 class="text-3xl font-bold underline">
+    Hello world!
+  </h1>
+  {% endblock content %}
+</body>
+</html>
