@@ -19,9 +19,14 @@ from django.urls import path,include
 from django.conf import settings
 from django.conf.urls.static import static
 from . import views
+from emails.views import verify_email_token_view, email_token_login_view,logout_hx_btn_view
+
 
 urlpatterns = [
     path('',views.Home_view),
+    path('hx/login/',email_token_login_view),
+    path('hx/logout/',logout_hx_btn_view),
+    path('verify/<uuid:token>/',verify_email_token_view),
     path('courses/',include("courses.urls")),
     path('admin/', admin.site.urls),
 ]

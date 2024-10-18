@@ -9,7 +9,7 @@
    head title on base.html
   {% endblock head_title %} {% endcomment %}
 </head>
-<body>
+<body hx-headers='{"X-CSRFToken": " {{ csrf_token }}" }'>
     {% block content %}
     
   <h1 class="text-3xl font-bold underline">
