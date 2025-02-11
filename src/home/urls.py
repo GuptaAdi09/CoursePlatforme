@@ -24,6 +24,8 @@ from emails.views import verify_email_token_view, email_token_login_view,logout_
 
 urlpatterns = [
     path('',views.Home_view),
+    path('login/',views.login_logout_template_view),
+    path('logout/',views.login_logout_template_view),
     path('hx/login/',email_token_login_view),
     path('hx/logout/',logout_hx_btn_view),
     path('verify/<uuid:token>/',verify_email_token_view),
@@ -32,3 +34,4 @@ urlpatterns = [
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)
+    urlpatterns += [path("__reload__/", include("django_browser_reload.urls")),]

@@ -3,7 +3,7 @@ from django.conf import settings
 
 
 def get_cloudnary_image_object(instance,
-                               as_html=False,field_name='image',width=200):
+                               as_html=False,field_name='image',width=200,height=None,format=None):
     if not hasattr(instance,field_name):
           return ""
     image_object = getattr(instance,field_name)
@@ -12,6 +12,9 @@ def get_cloudnary_image_object(instance,
     image_option ={
             "width":width
         }
+    if format is not None:
+          image_option['format'] = format
+          
     if as_html:
           return image_object.image(**image_option)
     url = image_object.build_url(**image_option)

@@ -75,6 +75,9 @@ class Course(models.Model):
             self.public_id = generate_public_id(self)
         super().save(*args, **kwargs)
 
+    def get_absolute_url(self):
+        return self.path
+
     def get_absolute_path(self):
         return f"http://localhost:8000"+self.path
     
@@ -85,6 +88,20 @@ class Course(models.Model):
 
     def get_display_name(self):
         return f"{self.title} -Course"
+    
+    def get_thumbnail(self):
+        if not self.image:
+            return None
+        return helpers.get_cloudnary_image_object(self,field_name='image',as_html=False,
+                                                 width=382,height=500)
+
+    
+    def get_display_image(self):
+        if not self.image:
+            return None
+
+        return helpers.get_cloudnary_image_object(self,field_name='image',as_html=False,
+                                                 width=750,height=500)
 
 
     @property
@@ -160,5 +177,15 @@ class Lesson(models.Model):
     @property
     def has_video(self):
         return self.video is not None
+    
+    def get_thumbnail(self):
+        if  self.thumbnail:
+            return helpers.get_cloudnary_image_object(self,field_name='thumbnail',as_html=False,format='jpg',
+                                                      width=382,)
+            
+        
+        if self.video:                                     
+            return helpers.get_cloudnary_image_object(self,field_name='video',as_html=False,format='jpg',
+                                                 width=382,)
 
 

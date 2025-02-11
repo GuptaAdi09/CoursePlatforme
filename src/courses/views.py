@@ -12,7 +12,12 @@ def course_list_view(request):
     context={
         'object_list':queryset
     }
-    return render(request,"courses/list.html",context)
+    template_name = "courses/list.html"
+    if request.htmx:
+        template_name = "courses/snippet/list.html"
+        context['queryset'] = queryset[:3]
+    return render(request, template_name, context)
+
 
 def course_detail_view(request,course_id=None,*args, **kwargs):
     print("course_id",course_id)

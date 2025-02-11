@@ -9,10 +9,11 @@ https://docs.djangoproject.com/en/5.0/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.0/ref/settings/
 """
-
+import os
 from pathlib import Path
 from decouple import config
-
+from dotenv import load_dotenv
+import dj_database_url
 
 BASE_URL = config("BASE_URL",default='http://127.0.0.1:8000')
 
@@ -28,13 +29,16 @@ TEMPLATES_DIR = BASE_DIR / "templates"
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
+
+load_dotenv()
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-5vjbje=39quiy6=l^j=sgdc#zp!bi8omwzpt8y&wie@9%!ldve'
-
+SECRET_KEY = os.getenv("SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.getenv("DEBUG", "False") == "True"
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS").split(",")
+
+CSRF_TRUSTED_ORIGINS =["https://courseplatforme.up.railway.app/"]
 
 
 # Application definition
@@ -49,7 +53,16 @@ INSTALLED_APPS = [
     'courses',
     'emails',
     "django_htmx",
+    'tailwind',
+    'django_browser_reload',
+    'theme',
     
+]
+
+TAILWIND_APP_NAME = 'theme'
+NPM_BIN_PATH = "C:\\Program Files\\nodejs\\npm.cmd"
+INTERNAL_IPS = [
+    "127.0.0.1",
 ]
 
 MIDDLEWARE = [
@@ -61,6 +74,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     "django_htmx.middleware.HtmxMiddleware",
+    "django_browser_reload.middleware.BrowserReloadMiddleware",
 ]
 from decouple import config
 
@@ -97,6 +111,10 @@ DATABASES = {
     }
 }
 
+ENVIRONMENT= os.getenv("ENVIRONMENT")
+POSTGRES_LOCALLY = False
+if ENVIRONMENT == "production" or POSTGRES_LOCALLY == True:
+    DATABASES['default'] = dj_database_url.config(default=os.getenv("DATABASE_URL"))
 
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators

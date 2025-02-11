@@ -6,6 +6,10 @@ from emails import services as email_services
 
 email_Add = settings.EMAIL_ADDRESS
 
+def login_logout_template_view(request):
+
+    return render(request,"auth/login-logout.html",{})
+
 
 def Home_view(request,*args, **kwargs):
     
